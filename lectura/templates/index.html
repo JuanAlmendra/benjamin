@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Tienda de Música</title>
+</head>
+<body>
+    <!-- Encabezado con enlaces de navegación -->
+    <section class="primera">
+        <header>
+            <a href="#" class="logo">Tienda Musica</a>
+        
+            <input type="checkbox" id="check">
+            <label for="check" class="icons">
+                <i class='bx bx-menu' id="menu-icon"></i>
+                <i class='bx bx-x' id="close-icon"></i>
+            </label>
+        
+            <nav class="navbar"> 
+                <a href="#inicio" style="--i:0;">Inicio</a>
+                <a href="#tienda" style="--i:1;">Tienda</a>
+                <a href="#login" style="--i:2;">Iniciar Sesión</a>
+            </nav>
+        </header>
+    </section>
+    <!-- Formulario de inicio de sesión -->
+    
+    <!-- Lista de canciones disponibles para compra -->
+    {% block content %}
+    <section class="segundo">
+        {% for lectura_cancion in canciones %}
+            <div class="beat-info">
+                <p>Artista: {{ lectura_cancion.artista }}</p>
+                <p>Nombre: {{ lectura_cancion.nombre }}</p>
+                <p>Duración: {{ lectura_cancion.duracion }}</p>
+                <img src="{{ lectura_cancion.imagen.url }}" alt="{{ lectura_cancion.nombre }}">
+                <audio controls>
+                    <source src="{{ lectura_cancion.archivo_mp3.url }}" type="audio/mp3">
+                    Tu navegador no soporta el elemento de audio.
+                </audio>
+            </div>
+        {% endfor %}
+    </section>
+    {% endblock %}
+
+    <section class="tercero">
+        {% for lectura_cancion in canciones %}
+        <div class="beat-info">
+            <p>Artista: {{ lectura_cancion.artista }}</p>
+        </div>
+        {% endfor %}
+        <h1>hola</h1>
+    </section>
+    
+    <!-- Pie de página con información de contacto -->
+    <footer>
+        <p>Contacto: info@tiendademusica.com</p>
+    </footer>
+
+    <script src="{% static 'style.js' %}"></script>
+</body>
+</html>
