@@ -30,30 +30,33 @@
     <!-- Formulario de inicio de sesión -->
     
     <!-- Lista de canciones disponibles para compra -->
-    {% block content %}
+    
     <section class="segundo">
-        {% for lectura_cancion in canciones %}
-            <div class="beat-info">
-                <p>Artista: {{ lectura_cancion.artista }}</p>
-                <p>Nombre: {{ lectura_cancion.nombre }}</p>
-                <p>Duración: {{ lectura_cancion.duracion }}</p>
-                <img src="{{ lectura_cancion.imagen.url }}" alt="{{ lectura_cancion.nombre }}">
-                <audio controls>
-                    <source src="{{ lectura_cancion.archivo_mp3.url }}" type="audio/mp3">
-                    Tu navegador no soporta el elemento de audio.
-                </audio>
-            </div>
-        {% endfor %}
+        <div class="contenedor2">
+            <!-- Aquí puedes agregar el contenido de tu lista de canciones -->
+            {% for cancion in canciones %}
+                <div class="cancion">
+                    <img src="{{ cancion.imagen.url }}" alt="{{ cancion.nombre }}" class="imagen-cancion" data-src="{{ cancion.archivo_mp3.url }}">
+                    <p class="nombre">{{ cancion.nombre }}</p>
+                    <p class="artista">{{ cancion.artista }}</p>
+                    <audio controls class="audio" data-src="{{ cancion.archivo_mp3.url }}">
+                        <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg">
+                        Tu navegador no soporta la reproducción de audio.
+                    </audio>
+                    <p class="duracion">{{ cancion.duracion }}</p>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
     </section>
-    {% endblock %}
+    
+    <div id="reproductor-adicional" class="reproductor-adicional"></div>
+    
+    
+    <div></div>
 
     <section class="tercero">
-        {% for lectura_cancion in canciones %}
-        <div class="beat-info">
-            <p>Artista: {{ lectura_cancion.artista }}</p>
-        </div>
-        {% endfor %}
-        <h1>hola</h1>
+        
     </section>
     
     <!-- Pie de página con información de contacto -->
