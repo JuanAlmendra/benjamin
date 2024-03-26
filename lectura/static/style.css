@@ -3,14 +3,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    
 }
 
 body {
     min-height: 100vh;
-    background: url('musica.jpg') no-repeat;
+    /*background: url('musica.jpg') no-repeat;*/
     background-size: cover;
     background-position: center;
+   /* background-color: #0a0a0a; */ /* Negro con un matiz */
+    color: #000000; /* Color del texto */
+
 }
 
 header {
@@ -204,13 +207,60 @@ header:hover::after {
     color: #666;
 }
 
-audio {
-    width: 100%; /* Ajusta el ancho del reproductor de audio al contenedor */
-    max-width: 300px; /* Establece un ancho máximo para evitar que el reproductor se haga demasiado grande */
-}
+
 
 .beat-info img {
     max-width: 100px; /* Ajusta el tamaño máximo de la imagen según sea necesario */
     max-height: 100px; /* Ajusta el tamaño máximo de la imagen según sea necesario */
     margin-right: 20px;
+}
+
+.contenedor2 {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-bottom: 100px;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: column;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+}
+
+
+.cancion {
+    display: flex;
+    justify-content: space-between; /* Alinear los elementos a los extremos */
+    margin-bottom: 20px; /* Ajustar el margen inferior según tu preferencia */
+    
+}
+
+
+.imagen-cancion {
+    width: 100px; /* Cambia este valor al tamaño deseado */
+    height: 100px; /* Esto mantendrá la proporción de la imagen */
+    /* O puedes establecer una altura fija en lugar de 'auto' si prefieres */
+}
+
+
+.nombre {
+    overflow: hidden; /* Oculta el texto que excede el ancho */
+    text-overflow: ellipsis; /* Agrega puntos suspensivos al final del texto truncado */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    width: 200px; /* Define el ancho máximo del nombre de la canción */
+    
+}
+
+
+.reproductor-adicional {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000; /* Color de fondo del reproductor adicional */
+    padding: 10px;
+    box-sizing: border-box;
+    display: none; /* Ocultar el reproductor adicional inicialmente */
 }

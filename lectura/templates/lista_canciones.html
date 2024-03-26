@@ -1,0 +1,20 @@
+    
+    <section class="segundo">
+        <div class="contenedor2">
+            
+            <!-- Aquí puedes agregar el contenido de tu lista de canciones -->
+            {% for cancion in canciones %}
+                <div class="cancion">
+                    <p class="nombre">{{ cancion.nombre }}</p>
+                    <p class="artista">{{ cancion.artista }}</p>
+                    <audio controls class="audio">
+                        <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg">
+                        Tu navegador no soporta la reproducción de audio.
+                    </audio>
+                    <p class="duracion">{{ cancion.duracion }}</p>
+                    <img src="{{ cancion.imagen.url }}" alt="{{ cancion.nombre }}" class="imagen-cancion">
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </section>
