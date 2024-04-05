@@ -20,11 +20,13 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('login/', views.login, name='login'),
-    path('canciones/', views.lista_canciones, name='canciones'),
+    path('<str:nombre_cancion>/', views.mi_vista, name='mi_vista'),
+    path('canciones/<str:nombre_cancion>/', views.obtener_cancion, name='obtener_cancion'),
 ]
 
 

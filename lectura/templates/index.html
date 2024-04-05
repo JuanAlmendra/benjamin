@@ -3,6 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -48,20 +49,56 @@
                 <br>
             {% endfor %}
         </div>
+    
+        <!-- Reproductor de música único -->
+        <div class="music-player-container" id="musicPlayer">
+            <div class="music-player-container">
+                <div class="title-music-container">
+                    <h4 class="nombre" id="songName"></h4>
+                    <span class="artista" id="artistName"></span>
+                    <div class="time-container">
+                        <span class="time-left" id="CurrentSongTime">0:00</span>
+                        <span class="time-right" id="SongLength">0:00</span>
+                    </div>
+                </div>
+                
+                <div class="controls-music-container">
+                    <div class="progress-song-container">
+                        <div class="progress-bar">
+                            <span class="progress"></span>
+                        </div>
+                    </div>
+                    <div class="time-container">
+                        <span class="time-left" id="CurrentSongTime"></span>
+                        <span class="time-left" id="SongLength"></span>
+                    </div>
+                </div>
+                <audio controls class="audio" id="audioPlayer">
+                </audio>
+                <div class="main-song-controls">
+                    <img src="{% static 'Backward.svg' %}" alt="Retroceder" class="icon" id="Back10">
+                    <img src="{% static 'Play.svg' %}" alt="Reproducir/Pausar" class="icon" id="PlayPause" >
+                    <img src="{% static 'Forward.svg' %}" alt="Avanzar" class="icon" id="Plus10">
+                </div>
+            </div>
+        </div>
     </section>
     
-    <div id="reproductor-adicional" class="reproductor-adicional"></div>
-    
-    
-    <div></div>
 
-    <section class="tercero">
+    
+    
+    
+    
+
+   
+    
         
-    </section>
+    
     
     <!-- Pie de página con información de contacto -->
     <footer>
         <p>Contacto: info@tiendademusica.com</p>
+        
     </footer>
 
     <script src="{% static 'style.js' %}"></script>
