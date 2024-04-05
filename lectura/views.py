@@ -7,13 +7,34 @@ def index(request):
     return render(request, 'index.html', {'canciones': canciones})
 
 
+def mi_vista(request, nombre_cancion):
+    try:
+        cancion = Cancion.objects.get(nombre=nombre_cancion)
+    except Cancion.DoesNotExist:
+        return render(request, 'index.html')
+
+    print(cancion)  # Imprime la canción en la consola del servidor para verificar si se ha recuperado correctamente
+
+    return render(request, 'index.html', {'cancion': cancion})
+    
+
+def obtener_cancion(request, nombre_cancion):
+    try:
+        cancion = Cancion.objects.get(nombre=nombre_cancion)
+    except Cancion.DoesNotExist:
+        return render(request, 'index.html')
+
+    print(cancion)  # Imprime la canción en la consola del servidor para verificar si se ha recuperado correctamente
+
+    return render(request, 'lista_canciones.html', {'cancion': cancion})
+
+
+
+
+
 def login(request):
     return render(request, 'login.html')
 
 
-def lista_canciones(request):
-    # Obtener todas las canciones de la base de datos
-    canciones = Cancion.objects.all()
 
-    # Renderizar el template 'lista_canciones.html' con las canciones en el contexto
-    return render(request, 'lista_canciones.html', {"canciones": canciones})
+
