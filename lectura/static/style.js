@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", function() {
-    var canciones = document.querySelectorAll(".cancion");
-    var reproductores = document.querySelectorAll(".audio");
-    var mainPlayPause = document.querySelector("#musicPlayer #PlayPause");
 
-   
+document.addEventListener("DOMContentLoaded", function() {
+    let canciones = document.querySelectorAll(".cancion");
+    let reproductores = document.querySelectorAll(".audio");
+    let mainPlayPause = document.querySelector("#musicPlayer #PlayPause");
+    let playPauseButton = document.getElementById("PlayPause");
+    let ultimoReproductor;
 
     // Función para pausar todos los reproductores excepto el dado
     function pausarOtrosReproductores(exceptoEste) {
@@ -25,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Agregar evento de clic a las imágenes y reproductores
     canciones.forEach(function(cancion) {
-        var imagen = cancion.querySelector(".imagen-cancion");
-        var audio = cancion.querySelector(".audio");
+        let imagen = cancion.querySelector(".imagen-cancion");
+        let audio = cancion.querySelector(".audio");
         
         imagen.addEventListener("click", function() {
             // Pausar otros reproductores
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (audio.paused) {
                 audio.play();
                 cambiarImagenReproductor(true); // Cambiar la imagen del botón de reproducción del reproductor a Pause
+                ultimoReproductor = audio; // Guardar referencia al último reproductor reproducido
             } else {
                 audio.pause();
                 cambiarImagenReproductor(false); // Cambiar la imagen del botón de reproducción del reproductor a Play
@@ -56,94 +58,24 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    mainPlayPause.addEventListener("click", function() {
-        var audio = this.parentElement.previousElementSibling;
-        if (audio.paused) {
-            audio.play();
-            cambiarImagenReproductor(true); // Cambiar la imagen del botón de reproducción del reproductor a Pause
-        } else {
-            audio.pause();
-            cambiarImagenReproductor(false); // Cambiar la imagen del botón de reproducción del reproductor a Play
+    // Agregar un evento de clic al botón de reproducción/pausa del reproductor
+    playPauseButton.addEventListener("click", function() {
+        if (ultimoReproductor) {
+            // Verificar si el último reproductor está pausado
+            if (ultimoReproductor.paused) {
+                // Si está pausado, reproducir la canción
+                ultimoReproductor.play();
+                // Cambiar la imagen del botón a la de pausa
+                playPauseButton.src = '/static/Pause.svg';
+            } else {
+                // Si se está reproduciendo, pausar la canción
+                ultimoReproductor.pause();
+                // Cambiar la imagen del botón a la de reproducción
+                playPauseButton.src = '/static/Play.svg';
+            }
+
+            // Pausar otros reproductores cuando se hace clic en el botón del reproductor
+            pausarOtrosReproductores(ultimoReproductor);
         }
-
-        // Pausar otros reproductores cuando se hace clic en el botón del reproductor
-        pausarOtrosReproductores(audio);
-    });    
-});
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const musicPlayers = document.querySelectorAll('.audio');
-    const songName = document.getElementById('songName');
-    const artistName = document.getElementById('artistName');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const backButton = document.getElementById('Back10');
-    const forwardButton = document.getElementById('Plus10');
-
-    let currentSongIndex = 0;
-
-    // Función para reproducir la siguiente canción
-    function playNextSong() {
-        currentSongIndex++;
-        if (currentSongIndex >= musicPlayers.length) {
-            currentSongIndex = 0;
-        }
-        playSongAtIndex(currentSongIndex);
-    }
-
-    // Función para reproducir la canción anterior
-    function playPreviousSong() {
-        currentSongIndex--;
-        if (currentSongIndex < 0) {
-            currentSongIndex = musicPlayers.length - 1;
-        }
-        playSongAtIndex(currentSongIndex);
-    }
-
-    // Función para reproducir la canción en el índice dado
-    function playSongAtIndex(index) {
-        const player = musicPlayers[index];
-        const songTitle = player.parentElement.querySelector('.nombre').textContent;
-        const artist = player.parentElement.querySelector('.artista').textContent;
-
-        // Actualizar el reproductor de música único
-        songName.textContent = songTitle; // Actualizar el nombre de la canción
-        artistName.textContent = artist; // Actualizar el nombre del artista
-        audioPlayer.src = player.dataset.src;
-        audioPlayer.play();
-    }
-
-    backButton.addEventListener('click', playPreviousSong);
-    forwardButton.addEventListener('click', playNextSong);
-
-    musicPlayers.forEach(function(player, index) {
-        player.addEventListener('play', function() {
-            currentSongIndex = index;
-            const songTitle = player.parentElement.querySelector('.nombre').textContent;
-            const artist = player.parentElement.querySelector('.artista').textContent;
-
-            // Actualizar el reproductor de música único
-            songName.textContent = songTitle; // Actualizar el nombre de la canción
-            artistName.textContent = artist; // Actualizar el nombre del artista
-        });
     });
 });
-
-
-function playSongAtIndex(index) {
-    const player = musicPlayers[index];
-    const songTitle = player.parentElement.querySelector('.nombre').textContent;
-    const artist = player.parentElement.querySelector('.artista').textContent;
-
-    // Actualizar el reproductor de música único
-    songName.textContent = songTitle; // Actualizar el nombre de la canción
-    artistName.textContent = artist; // Actualizar el nombre del artista
-    
-    // Establecer el tiempo de reproducción en cero para comenzar desde el principio
-    audioPlayer.currentTime = 0;
-    
-    audioPlayer.src = player.dataset.src;
-    audioPlayer.play();
-}
