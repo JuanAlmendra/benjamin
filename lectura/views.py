@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Cancion
+from django.http import JsonResponse
 
 
 def index(request):
@@ -20,6 +21,7 @@ def mi_vista(request, nombre_cancion):
 
 def obtener_cancion(request, nombre_cancion):
     try:
+        
         cancion = Cancion.objects.get(nombre=nombre_cancion)
     except Cancion.DoesNotExist:
         return render(request, 'index.html')
@@ -33,8 +35,9 @@ def obtener_cancion(request, nombre_cancion):
 
 
 def login(request):
-    return render(request, 'login.html')
-
-
+    canciones = Cancion.objects.all()
+    lista_musica=list(Cancion.objects.all().values())
+    return render(request, 'login.html', {'canciones': canciones, "lista_musica": lista_musica})
+   
 
 

@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Tienda de Música</title>
+</head>
+<body>
+<button id="boton1">Botón 1</button>
+<button id="boton2">Botón 2</button>
+
+
+
+<section class="segundo">
+    <div class="contenedor2">
+        <!-- Aquí puedes agregar el contenido de tu lista de canciones -->
+        {% for cancion in canciones %}
+            <div class="cancion">
+                <img src="{{ cancion.imagen.url }}" alt="{{ cancion.nombre }}" class="imagen-cancion" data-src="{{ cancion.archivo_mp3.url }}">
+                <p class="nombre">{{ cancion.nombre }}</p>
+                <p class="artista">{{ cancion.artista }}</p>
+                <audio controls class="audio" data-src="{{ cancion.archivo_mp3.url }}">
+                    <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg" >
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+                <p class="duracion">{{ cancion.duracion_formateada }}</p>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+
+    <!-- Reproductor de música único -->
+    <div class="music-player-container" id="musicPlayer">
+        <div class="music-player-container">
+            <div class="title-music-container">
+                <h4 class="nombre" id="songName"></h4>
+                <span class="artista" id="artistName"></span>
+                <div class="time-container">
+                    
+                    <span class="time-left" id="CurrentSongTime">{{ cancion.duracion_formateada }}</span>
+                    <span class="time-right" id="SongLength">00</span>
+                    {{lista_musica | json_script:'musicas' }}   
+                </div>
+            </div>
+            
+            <div class="controls-music-container">
+                <div class="progress-song-container">
+                    <div class="progress-bar">
+                        <span class="progress"></span>
+                    </div>
+                </div>
+                <div class="time-container">
+                    <span class="time-left" id="CurrentSongTime"></span>
+                    <span class="time-left" id="SongLength"></span>
+                </div>
+            </div>
+            <audio controls class="audio" id="audioPlayer">
+            </audio>
+            <div class="main-song-controls">
+                
+
+                <span id="songTitle" style="color: white;"></span>
+    <span id="artistName" style="color: white;"></span>
+    <span id="albumTitle" style="color: white;"></span>
+                <img src="{% static 'Backward.svg' %}" alt="Retroceder" class="icon" id="Back10">
+                <img src="{% static 'Play.svg' %}" alt="Reproducir/Pausar" class="icon" id="PlayPause" >
+                <img src="{% static 'Forward.svg' %}" alt="Avanzar" class="icon" id="Plus10">
+                
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'style1.js' %}"></script>
+</body>
+</html>

@@ -276,7 +276,7 @@ header:hover::after {
     background: linear-gradient(30deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
     backdrop-filter: blur(10px);
     height: fit-content;
-    width: 35vw;
+    width: 97%;
     border-radius: 10px;
     padding: 2rem 0;
     display: flex;
@@ -353,6 +353,12 @@ header:hover::after {
 
 .time-left{
     margin-top: 0.3rem;
+    color: white;
+}
+
+.time-right{
+    margin-top: 0.3rem;
+    color: white;
 }
 
 .main-song-controls{
@@ -378,4 +384,3 @@ header:hover::after {
 audio{
     display: none;
 }
-
