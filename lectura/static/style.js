@@ -6,6 +6,78 @@ document.addEventListener("DOMContentLoaded", function() {
     let playPauseButton = document.getElementById("PlayPause");
     let ultimoReproductor;
 
+
+    //constantes para titulos del reproductor 
+    const artistaReproductor = document.querySelector('.artistaReproductor');
+    const nombreReproductor = document.querySelector('.nombreReproductor');
+    const archivo_mp3_reproductor = document.querySelector('.archivo_mp3_reproductor');
+    const imagenReproductor = document.querySelector('.imagenReproductor');    
+
+    let indiceMusica=0
+
+    const pruebas=JSON.parse(document.getElementById('musicas').textContent)
+    console.log(pruebas)
+
+    //muestra el primer elemento antes de que suene la cancion no sirve pero puede servir mas adelante
+    artistaReproductor.textContent=pruebas[indiceMusica].artista
+    nombreReproductor.textContent=pruebas[indiceMusica].nombre
+    archivo_mp3_reproductor.textContent=pruebas[indiceMusica].archivo_mp3
+    imagenReproductor.textContent=pruebas[indiceMusica].imagen
+
+
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('play', function() {
+            // Obtener la URL de la imagen del artista de la canción que se está reproduciendo
+            const imagenCancion = this.parentElement.querySelector('.imagen-cancion').getAttribute('src');
+    
+            // Obtener el elemento <img> de la imagen del reproductor
+            const imagenReproductor = document.querySelector('.imagenReproductor');
+    
+            // Asignar la URL de la imagen al atributo src del elemento <img>
+            imagenReproductor.setAttribute('src', imagenCancion);
+        });
+    });
+
+
+    // Escuchar el evento 'play' en cada elemento de audio
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('play', function() {
+            // Obtener el artista de la canción que se está reproduciendo
+            const artistaCancion = this.parentElement.querySelector('.artista').textContent;
+
+            // Mostrar el artista de la canción que se está reproduciendo
+            artistaReproductor.textContent = artistaCancion;
+        });
+    });
+
+    // Escuchar el evento 'play' en cada elemento de audio
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('play', function() {
+            // Obtener el nombre de la canción que se está reproduciendo
+            const nombreCancion = this.parentElement.querySelector('.nombre').textContent;
+
+            // Mostrar el nombre de la canción que se está reproduciendo
+            nombreReproductor.textContent = nombreCancion;
+        });
+    });
+
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('play', function() {
+            // Obtener la URL del archivo de audio desde el atributo data-src
+            const archivo_mp3_Cancion = this.getAttribute('data-src');
+    
+            // Obtener solo el nombre del archivo de la URL completa
+            const nombreArchivo = archivo_mp3_Cancion.split('/').pop();
+    
+            // Mostrar el nombre del archivo en el contenedor correspondiente
+            archivo_mp3_reproductor.textContent = nombreArchivo;
+        });
+    });
+    
+   
+    
+
+
     // Función para pausar todos los reproductores excepto el dado
     function pausarOtrosReproductores(exceptoEste) {
         reproductores.forEach(function(reproductor) {

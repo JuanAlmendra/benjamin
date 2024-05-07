@@ -45,7 +45,7 @@
                         <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg">
                         Tu navegador no soporta la reproducción de audio.
                     </audio>
-                    <p class="duracion">{{ cancion.duracion }}</p>
+                    <p class="duracion">{{ cancion.duracion_formateada }}</p>
                 </div>
                 <br>
             {% endfor %}
@@ -60,8 +60,11 @@
                     <div class="time-container">
                         <span class="time-left" id="CurrentSongTime">0:00</span>
                         <span class="time-right" id="SongLength">0:00</span>
+                        {{lista_musica | json_script:'musica' }}  
                     </div>
                 </div>
+
+                
                 
                 <div class="controls-music-container">
                     <div class="progress-song-container">
