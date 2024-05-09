@@ -11,99 +11,101 @@
     <title>Tienda de Música</title>
 </head>
 <body>
-    <!-- Encabezado con enlaces de navegación -->
-    <section class="primera">
-        <header>
-            <a href="#" class="logo">Tienda Musica</a>
-        
-            <input type="checkbox" id="check">
-            <label for="check" class="icons">
-                <i class='bx bx-menu' id="menu-icon"></i>
-                <i class='bx bx-x' id="close-icon"></i>
-            </label>
-        
-            <nav class="navbar"> 
-                <a href="#inicio" style="--i:0;">Inicio</a>
-                <a href="#tienda" style="--i:1;">Tienda</a>
-                <a href="#login" style="--i:2;">Iniciar Sesión</a>
-            </nav>
-        </header>
-    </section>
-    <!-- Formulario de inicio de sesión -->
-    
-    <!-- Lista de canciones disponibles para compra -->
-    
-    <section class="segundo">
-        <div class="contenedor2">
-            <!-- Aquí puedes agregar el contenido de tu lista de canciones -->
-            {% for cancion in canciones %}
-                <div class="cancion">
-                    <img src="{{ cancion.imagen.url }}" alt="{{ cancion.nombre }}" class="imagen-cancion" data-src="{{ cancion.archivo_mp3.url }}">
-                    <p class="nombre">{{ cancion.nombre }}</p>
-                    <p class="artista">{{ cancion.artista }}</p>
-                    <audio controls class="audio" data-src="{{ cancion.archivo_mp3.url }}">
-                        <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg">
-                        Tu navegador no soporta la reproducción de audio.
-                    </audio>
-                    <p class="duracion">{{ cancion.duracion_formateada }}</p>
-                </div>
-                <br>
-            {% endfor %}
-        </div>
-    
-        <!-- Reproductor de música único -->
-        <div class="music-player-container" id="musicPlayer">
-            <div class="music-player-container">
-                <div class="title-music-container">
-                    <h4 class="nombre" id="songName"></h4>
-                    <span class="artista" id="artistName"></span>
-                    <div class="time-container">
-                        <span class="time-left" id="CurrentSongTime">0:00</span>
-                        <span class="time-right" id="SongLength">0:00</span>
-                        {{lista_musica | json_script:'musica' }}  
-                    </div>
-                </div>
 
-                
-                
-                <div class="controls-music-container">
-                    <div class="progress-song-container">
-                        <div class="progress-bar">
-                            <span class="progress"></span>
-                        </div>
-                    </div>
-                    <div class="time-container">
-                        <span class="time-left" id="CurrentSongTime"></span>
-                        <span class="time-left" id="SongLength"></span>
-                    </div>
-                </div>
-                <audio controls class="audio" id="audioPlayer">
+<!-- Encabezado con enlaces de navegación -->
+<section class="primera">
+    <header>
+        <a href="#" class="logo">Tienda Musica</a>
+    
+        <input type="checkbox" id="check">
+        <label for="check" class="icons">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
+        </label>
+    
+        <nav class="navbar"> 
+            <a href="#inicio" style="--i:0;">Inicio</a>
+            <a href="#tienda" style="--i:1;">Tienda</a>
+            <a href="#login" style="--i:2;">Iniciar Sesión</a>
+        </nav>
+    </header>
+</section>
+<!-- Formulario de inicio de sesión -->
+
+
+<section class="segundo">
+    <div class="contenedor2">
+        <!-- Aquí puedes agregar el contenido de tu lista de canciones -->
+        {% for cancion in canciones %}
+            <div class="cancion">
+                <img src="{{ cancion.imagen.url }}" alt="{{ cancion.nombre }}" class="imagen-cancion" data-src="{{ cancion.archivo_mp3.url }}">
+                <p class="nombre">{{ cancion.nombre }}</p>
+                <p class="artista">{{ cancion.artista }}</p>
+                <audio controls class="audio" data-src="{{ cancion.archivo_mp3.url }}">
+                    <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg" >    
                 </audio>
-                <div class="main-song-controls">
-                    <img src="{% static 'Backward.svg' %}" alt="Retroceder" class="icon" id="Back10">
-                    <img src="{% static 'Play.svg' %}" alt="Reproducir/Pausar" class="icon" id="PlayPause" >
-                    <img src="{% static 'Forward.svg' %}" alt="Avanzar" class="icon" id="Plus10">
+                <p class="duracion">{{ cancion.duracion_formateada }}</p>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+
+    <!-- Reproductor de música único -->
+    <div class="music-player-container" id="musicPlayer">
+        <div class="music-player-container">
+            <div class="title-music-container">
+                <div class="elementos-reproductor">
+                <img class="imagenReproductor" ></img>
+                    <h4 class="nombreReproductor" id="songName"></h4>
+                    <span class="artistaReproductor" style="color: rgb(0, 242, 255);"id="artistName"></span>
+                    <span class="archivo_mp3_reproductor" ></span>
+                    <div class="time-container">
+                    <input type="range" min="0" max="1" step="0.01" value="1" id="volumeControl">
+                    <span class="time-left" >00</span>
+                    <span class="duracionReproductor" style="color: white;"></span>
                 </div>
             </div>
         </div>
-    </section>
+            
+            <div class="controls-music-container">
+                <div class="progress-song-container">
+                    <div class="progress-bar">
+                        <span class="progress"></span>
+                    </div>
+                </div>
+                <div class="time-container">
+                    <span class="time-left" id="CurrentSongTime"></span>
+                    <span class="time-left" id="SongLength"></span>
+                </div>
+            </div>
+            <audio controls class="audio" class="audioPlayer">
+            </audio>
+            <div class="main-song-controls">
+                
 
-    
-    
-    
-    
+                <span id="songTitle" style="color: white;"></span>
+                <span id="artistName" style="color: white;"></span>
+                <span id="albumTitle" style="color: white;"></span>
+                <img src="{% static 'Backward.svg' %}" alt="Retroceder" class="icon" id="Back10">
+                <img src="{% static 'Play.svg' %}" alt="Reproducir/Pausar" class="icon" id="PlayPause" >
+                <img src="{% static 'Forward.svg' %}" alt="Avanzar" class="icon" id="Plus10">
+                
 
-   
-    
-        
-    
-    
-    <!-- Pie de página con información de contacto -->
-    <footer>
-        <p>Contacto: info@tiendademusica.com</p>
-        
-    </footer>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <script src="{% static 'style.js' %}"></script>
+
+
+{{lista_musica | json_script:'musicas' }}   
+
+
+
+
+
+
+
+<script src="{% static 'style.js' %}"></script>
 </body>
 </html>

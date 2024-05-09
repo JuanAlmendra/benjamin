@@ -384,3 +384,40 @@ header:hover::after {
 audio{
     display: none;
 }
+
+
+/* ELEMENTOS DEL REPRODUCTOR */
+.elementos-reproductor {
+    display: flex; /* Alinea los elementos en línea */
+    align-items: center; /* Centra verticalmente los elementos */
+    margin-right: 10px;
+}
+
+.imagenReproductor {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.nombreReproductor {
+    margin-right: 10px; /* Espacio entre el nombre y el siguiente elemento */
+}
+
+.artistaReproductor {
+    margin-right: 10px; /* Espacio entre el artista y el siguiente elemento */
+}
+
+.time-container {
+    display: flex; /* Alinea el tiempo a la derecha */
+    margin-left: auto; /* Mueve el tiempo al extremo derecho */
+}
+
+
+
+.nombreReproductor,
+.artistaReproductor,
+.time-container {
+    text-transform: uppercase;
+}
+
+/* Puedes añadir más estilos según sea necesario para otros elementos */

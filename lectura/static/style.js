@@ -6,14 +6,21 @@ document.addEventListener("DOMContentLoaded", function() {
     let playPauseButton = document.getElementById("PlayPause");
     let ultimoReproductor;
 
+    //control de audio
+    
+
+    
 
     //constantes para titulos del reproductor 
     const artistaReproductor = document.querySelector('.artistaReproductor');
     const nombreReproductor = document.querySelector('.nombreReproductor');
     const archivo_mp3_reproductor = document.querySelector('.archivo_mp3_reproductor');
     const imagenReproductor = document.querySelector('.imagenReproductor');    
+    const duracionReproductor = document.querySelector('.duracionReproductor'); 
+    let contenedorImagenes = document.querySelectorAll(".imagen-cancion");
 
     let indiceMusica=0
+    let ultimoIndiceMusica = -1;
 
     const pruebas=JSON.parse(document.getElementById('musicas').textContent)
     console.log(pruebas)
@@ -21,22 +28,54 @@ document.addEventListener("DOMContentLoaded", function() {
     //muestra el primer elemento antes de que suene la cancion no sirve pero puede servir mas adelante
     artistaReproductor.textContent=pruebas[indiceMusica].artista
     nombreReproductor.textContent=pruebas[indiceMusica].nombre
+    console.log(pruebas[indiceMusica].nombre);
     archivo_mp3_reproductor.textContent=pruebas[indiceMusica].archivo_mp3
-    imagenReproductor.textContent=pruebas[indiceMusica].imagen
+    
+    duracionReproductor.textContent=pruebas[indiceMusica].duracion
 
 
+    
+
+    // Escuchar el evento 'play' en cada elemento de audio
     reproductores.forEach(function(reproductor) {
         reproductor.addEventListener('play', function() {
-            // Obtener la URL de la imagen del artista de la canción que se está reproduciendo
-            const imagenCancion = this.parentElement.querySelector('.imagen-cancion').getAttribute('src');
-    
-            // Obtener el elemento <img> de la imagen del reproductor
-            const imagenReproductor = document.querySelector('.imagenReproductor');
-    
-            // Asignar la URL de la imagen al atributo src del elemento <img>
-            imagenReproductor.setAttribute('src', imagenCancion);
+             // Pausar todas las demás canciones que se estén reproduciendo
+             reproductores.forEach(function(otroReproductor) {
+                if (otroReproductor !== reproductor) {
+                    otroReproductor.pause();
+                    otroReproductor.currentTime = 0; // Volver al inicio
+                }
+            });
+
+            // Obtener el nombre de la canción que se está reproduciendo
+            const duracionCancion = this.parentElement.querySelector('.duracion').textContent;
+
+            // Mostrar el nombre de la canción que se está reproduciendo
+            duracionReproductor.textContent = duracionCancion;
+
+            ultimoIndiceMusica = indiceMusica;
         });
     });
+
+    // Restablecer el último reproductor cuando se hace clic en otra canción
+    canciones.forEach(function(cancion, index) {
+        cancion.addEventListener('click', function() {
+        });
+    });
+
+
+
+    contenedorImagenes.forEach(function(imagen) {
+        imagen.addEventListener('click', function() {
+            // Obtener la URL de la imagen seleccionada
+            const imagenSeleccionada = this.getAttribute('src');
+
+            // Actualizar la imagen en la sección del reproductor
+            imagenReproductor.setAttribute('src', imagenSeleccionada);
+        });
+    });
+    
+    
 
 
     // Escuchar el evento 'play' en cada elemento de audio
@@ -60,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
             nombreReproductor.textContent = nombreCancion;
         });
     });
+
 
     reproductores.forEach(function(reproductor) {
         reproductor.addEventListener('play', function() {
