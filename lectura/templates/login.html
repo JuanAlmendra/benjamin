@@ -25,8 +25,7 @@
                 <p class="nombre">{{ cancion.nombre }}</p>
                 <p class="artista">{{ cancion.artista }}</p>
                 <audio controls class="audio" data-src="{{ cancion.archivo_mp3.url }}">
-                    <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg" >
-                    
+                    <source src="{{ cancion.archivo_mp3.url }}" type="audio/mpeg" >    
                 </audio>
                 <p class="duracion">{{ cancion.duracion_formateada }}</p>
             </div>
@@ -38,14 +37,13 @@
     <div class="music-player-container" id="musicPlayer">
         <div class="music-player-container">
             <div class="title-music-container">
-                <h4 class="imagenReproductor" ></h4>
+                
                 <h4 class="nombreReproductor" id="songName"></h4>
                 <span class="artistaReproductor" id="artistName"></span>
                 <span class="archivo_mp3_reproductor" ></span>
                 <div class="time-container">
-                    
-                    <span class="time-left" id="CurrentSongTime">{{ cancion.duracion_formateada }}</span>
-                    <span class="time-right" id="SongLength">00</span>
+                <span class="time-left" >00</span>
+                <span class="duracionReproductor" style="color: white;"></span>
                     
                 </div>
             </div>
@@ -83,6 +81,10 @@
 
 {{lista_musica | json_script:'musicas' }}   
 
+
+<h4 class="imagenReproductor" ></h4>
+
+<span class="duracionReproductor" style="color: rgb(0, 255, 110);"></span>
 
 
 <script src="{% static 'style.js' %}"></script>
