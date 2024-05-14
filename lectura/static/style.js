@@ -5,10 +5,108 @@ document.addEventListener("DOMContentLoaded", function() {
     let mainPlayPause = document.querySelector("#musicPlayer #PlayPause");
     let playPauseButton = document.getElementById("PlayPause");
     let ultimoReproductor;
-
-    //control de audio
+    let volumeControl = document.querySelector(".volumeControl");    
     
 
+    // Obtener elementos del progreso de la canción
+    let progressBar = document.querySelector(".progress");
+    let tiempoActual = document.getElementById("CurrentSongTime");
+    const progressBarContainer = document.querySelector(".progress-song-container");
+    
+    
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('timeupdate', function() {
+            let currentTime = reproductor.currentTime;
+            let duration = reproductor.duration;
+            let progressWidth = (currentTime / duration) * 100;
+            progressBar.style.width = progressWidth + '%';
+
+            let minutes = Math.floor(currentTime / 60);
+            let seconds = Math.floor(currentTime % 60);
+            tiempoActual.textContent = formatTime(minutes) + ':' + formatTime(seconds);
+        });
+
+        // Agregar un event listener al contenedor de la barra de progreso
+        progressBarContainer.addEventListener("click", function(event) {
+            // Obtener la duración total de la canción
+            const duration = reproductor.duration;
+            // Verificar si la duración es un número válido y finito
+            if (!isNaN(duration) && isFinite(duration)) {
+                // Obtener la posición del clic dentro del contenedor de la barra de progreso
+                const clickPosition = event.clientX - progressBarContainer.getBoundingClientRect().left;
+                // Obtener el ancho total de la barra de progreso
+                const progressBarWidth = progressBarContainer.clientWidth;
+                // Calcular el porcentaje de la posición del clic dentro de la barra de progreso
+                const progressPercentage = (clickPosition / progressBarWidth);
+                // Calcular el tiempo correspondiente al punto donde se hizo clic
+                const newTime = progressPercentage * duration;
+                // Verificar si el nuevo tiempo es un número válido y finito
+                if (!isNaN(newTime) && isFinite(newTime)) {
+                    // Establecer el tiempo actual de reproducción de la canción al nuevo tiempo
+                    reproductor.currentTime = newTime;
+                } else {
+                    console.error("El tiempo nuevo no es un número válido:", newTime);
+                }
+            } else {
+                console.error("La duración de la canción no está disponible.");
+            }
+        });
+    });
+
+    function formatTime(time) {
+        return (time < 10 ? '0' : '') + time;
+    }
+    
+   
+    
+    
+
+    
+
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('timeupdate', function() {
+            let currentTime = reproductor.currentTime;
+            let duration = reproductor.duration;
+            let progressWidth = (currentTime / duration) * 100;
+            progressBar.style.width = progressWidth + '%';
+        });
+    });
+    reproductores.forEach(function(reproductor) {
+        reproductor.addEventListener('timeupdate', function() {
+            let currentTime = reproductor.currentTime;
+            let minutes = Math.floor(currentTime / 60);
+            let seconds = Math.floor(currentTime % 60);
+            tiempoActual.textContent = formatTime(minutes) + ':' + formatTime(seconds);
+        });
+    })
+    
+    function formatTime(time) {
+        return (time < 10 ? '0' : '') + time;
+    }
+
+
+    
+    
+    
+
+    reproductores.forEach(function(reproductor) {
+        reproductor.volume = volumeControl.value; // Establecer el volumen inicial
+
+        volumeControl.addEventListener("input", function() {
+            reproductor.volume = volumeControl.value; // Actualizar el volumen del reproductor al valor del control deslizante
+        });
+    });
+
+    volumeControl.style.setProperty("--volume", (volumeControl.value / volumeControl.max) * 100 + "%");
+
+
+    //no funciona el mute aun 
+    document.addEventListener("DOMContentLoaded", function() {
+        let volumeIcon = document.querySelector('.fa-volume-up');
+        volumeIcon.addEventListener('click', function() {
+            mute_sound();
+        });
+    });
     
 
     //constantes para titulos del reproductor 
