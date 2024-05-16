@@ -11,84 +11,77 @@ document.addEventListener("DOMContentLoaded", function() {
     // Obtener elementos del progreso de la canción
     let progressBar = document.querySelector(".progress");
     let tiempoActual = document.getElementById("CurrentSongTime");
-    const progressBarContainer = document.querySelector(".progress-song-container");
+    let progressBarContainer = document.querySelector(".progress-bar");
+
     
+
+    let valor = progressBar.value
     
-    reproductores.forEach(function(reproductor) {
-        reproductor.addEventListener('timeupdate', function() {
-            let currentTime = reproductor.currentTime;
-            let duration = reproductor.duration;
-            let progressWidth = (currentTime / duration) * 100;
-            progressBar.style.width = progressWidth + '%';
+    console.log("este es el valor",valor)
 
-            let minutes = Math.floor(currentTime / 60);
-            let seconds = Math.floor(currentTime % 60);
-            tiempoActual.textContent = formatTime(minutes) + ':' + formatTime(seconds);
-        });
-
-        // Agregar un event listener al contenedor de la barra de progreso
-        progressBarContainer.addEventListener("click", function(event) {
-            // Obtener la duración total de la canción
-            const duration = reproductor.duration;
-            // Verificar si la duración es un número válido y finito
-            if (!isNaN(duration) && isFinite(duration)) {
-                // Obtener la posición del clic dentro del contenedor de la barra de progreso
-                const clickPosition = event.clientX - progressBarContainer.getBoundingClientRect().left;
-                // Obtener el ancho total de la barra de progreso
-                const progressBarWidth = progressBarContainer.clientWidth;
-                // Calcular el porcentaje de la posición del clic dentro de la barra de progreso
-                const progressPercentage = (clickPosition / progressBarWidth);
-                // Calcular el tiempo correspondiente al punto donde se hizo clic
-                const newTime = progressPercentage * duration;
-                // Verificar si el nuevo tiempo es un número válido y finito
-                if (!isNaN(newTime) && isFinite(newTime)) {
-                    // Establecer el tiempo actual de reproducción de la canción al nuevo tiempo
-                    reproductor.currentTime = newTime;
-                } else {
-                    console.error("El tiempo nuevo no es un número válido:", newTime);
-                }
-            } else {
-                console.error("La duración de la canción no está disponible.");
-            }
-        });
-    });
-
+    //aumento de barra de progreso
     function formatTime(time) {
         return (time < 10 ? '0' : '') + time;
-    }
-    
-   
-    
-    
+        }
 
-    
+        let progressBarWidth;
+        reproductores.forEach(function(reproductor){
+            progressBarContainer.addEventListener("click", function() {
+              //  reproductor.currentTime
+               console.log("se hizo click en el progreso de la barra")
+            });
+        })
 
-    reproductores.forEach(function(reproductor) {
-        reproductor.addEventListener('timeupdate', function() {
-            let currentTime = reproductor.currentTime;
-            let duration = reproductor.duration;
-            let progressWidth = (currentTime / duration) * 100;
-            progressBar.style.width = progressWidth + '%';
+        let progressBarWidthGlobal = 0;
+        let duracionglobal = 0;
+        //muestra la linea de progrecion en la barra 
+        reproductores.forEach(function(reproductor) {
+            reproductor.addEventListener('timeupdate', function() {
+                let currentTime = reproductor.currentTime;
+                let duration = reproductor.duration;
+                let progressWidth = (currentTime / duration) * 100;
+                progressBar.style.width = progressWidth + '%';
+                progressBarWidth = progressBarContainer.clientWidth;  
+
+                //muestra los segundos en el lado izquierdo 
+                let minutes = Math.floor(currentTime / 60);
+                let seconds = Math.floor(currentTime % 60);
+                tiempoActual.textContent = formatTime(minutes) + ':' + formatTime(seconds);
+                progressBarWidthGlobal = progressBar.style.width;
+                duracionglobal = duration
+                
+                         
+                // Llamar a una función de devolución de llamada después de actualizar progressBarWidthGlobal
+                actualizarProgressBarWidthGlobal();
+            });
         });
-    });
-    reproductores.forEach(function(reproductor) {
-        reproductor.addEventListener('timeupdate', function() {
-            let currentTime = reproductor.currentTime;
-            let minutes = Math.floor(currentTime / 60);
-            let seconds = Math.floor(currentTime % 60);
-            tiempoActual.textContent = formatTime(minutes) + ':' + formatTime(seconds);
-        });
-    })
-    
-    function formatTime(time) {
-        return (time < 10 ? '0' : '') + time;
-    }
+
+       
+        
+        function actualizarProgressBarWidthGlobal() {
+            console.log(progressBarWidthGlobal,"fuera");
+            console.log("duracion promesa", duracionglobal)
+            
+            
+            // Aquí puedes realizar cualquier otra acción que requiera el valor actualizado de progressBarWidthGlobal
+            // Agregar evento de clic a la barra de progreso
+            progressBarContainer.addEventListener("click", function(event) {
+                // Obtener la duración total de la canción
+                console.log("has hecho click en la barra donde no esta el progreso")
+            // const duration = reproductor.duration;
+            // Obtener la posición del clic dentro del contenedor de la barra de progreso
+            const clickPosition = event.clientX - progressBarContainer.getBoundingClientRect().left;
+            console.log(clickPosition,"posicion click")
+            // Calcular el porcentaje de la posición del clic dentro de la barra de progreso
+            const progressPercentage = (clickPosition / progressBarWidth) * 100;
+            console.log(progressPercentage, "porcentage de la barra")
+            })
+        }
 
 
-    
-    
-    
-
+        
+       
+    // volumen del reproductor    
     reproductores.forEach(function(reproductor) {
         reproductor.volume = volumeControl.value; // Establecer el volumen inicial
 
