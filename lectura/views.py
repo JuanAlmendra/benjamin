@@ -10,8 +10,8 @@ def index(request):
 
 def login(request):
     canciones = Cancion.objects.all()
-    
-    return render(request, 'login.html', {'canciones': canciones})
+    lista_musica=list(Cancion.objects.all().values())
+    return render(request, 'login.html', {'canciones': canciones, "lista_musica": lista_musica})
 
 
 def mi_vista(request, nombre_cancion):
